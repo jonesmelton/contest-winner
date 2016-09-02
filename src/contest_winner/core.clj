@@ -10,25 +10,6 @@
                                               (env :user-access-token)
                                               (env :user-access-secret)))
 
-
-(defn user-id [tweet]
-  (get-in tweet [:body :user :id]))
-
-(defn tweet-text [tweet]
-  (get-in tweet [:body :text]))
-
-(defn tweet-hashtags [tweet]
-  (get-in tweet [:body :entities :hashtags]))
-
-(defn following-poster? [tweet]
-  (get-in tweet [:body :user :following]))
-
-(defn retweeted? [tweet]
-  (get-in tweet [:body :retweeted]))
-
-(defn favorited? [tweet]
-  (get-in tweet [:body :favorited]))
-
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
