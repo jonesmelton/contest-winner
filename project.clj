@@ -12,4 +12,5 @@
   :profiles {:uberjar {:aot :all}}
   :plugins [[com.jakemccrary/lein-test-refresh "0.16.0"]
                                   [lein-kibit "0.1.2"]
-                                  [venantius/ultra "0.4.1"]])
+                                  [venantius/ultra "0.4.1"]
+                                  [lein-environ "1.1.0"]])
