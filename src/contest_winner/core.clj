@@ -11,19 +11,13 @@
                                               (env :user-access-token)
                                               (env :user-access-secret)))
 
-(def tweet-keys  
-  [:user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
-
-(def tweet-parsers 
-  [props/user-id props/tweet-text props/tweet-hashtags props/following-poster? props/retweeted? props/favorited?])
-
-(defn raw-parse-tweet
-  [tweet]
-  (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
-
-(defn get-tweets
+(defn search-tweets
   [query]
   (rest/search-tweets :oauth-creds my-creds :params {:q query}))
+
+(defn return-condensed-tweets
+  [search-query]
+  (map props/raw-parse-tweet (props/tweets-from-response (search-tweets search-query))))
 
 (defn -main
   "I don't do a whole lot ... yet."
