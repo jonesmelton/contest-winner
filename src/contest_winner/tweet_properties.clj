@@ -13,8 +13,8 @@
   (get-in tweet [:body :user :following]))
 
 (defn retweeted? [tweet]
+  "indicates if the current user has retweeted the tweet"
   (get-in tweet [:body :retweeted]))
 
 (defn favorited? [tweet]
   (get-in tweet [:body :favorited]))
-
