@@ -11,11 +11,15 @@
                                               (env :user-access-token)
                                               (env :user-access-secret)))
 
-(def tweet-keys  [:user-id :tweet-text :tweet-hashtags :following_poster? :retweeted? :favorited?])
+(def tweet-keys  
+  [:user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
+
+(def tweet-parsers 
+  [props/user-id props/tweet-text props/tweet-hashtags props/following-poster? props/retweeted? props/favorited?])
 
 (defn raw-parse-tweet
   [tweet]
-  (zipmap tweet-keys ((juxt props/user-id props/tweet-text props/tweet-hashtags props/following-poster? props/retweeted? props/favorited?) tweet)))
+  (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
 
 (defn get-tweets
   [query]
@@ -25,3 +29,5 @@
   "I don't do a whole lot ... yet."
   [& args]
   (rest/statuses-update :oauth-creds my-creds :params {:status args}))
+
+#_ {:user-id 771789532379222016, :tweet-text "helllooooooo", :tweet-hashtags [], :following_poster? false, :retweeted? false, :favorited? false}
