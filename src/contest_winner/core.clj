@@ -17,7 +17,10 @@
 
 (defn parse-tweets
   [search-query]
-  (map props/parse-tweet (props/tweets-from-response (search-tweets search-query))))
+  (->> (search-query)
+       (search-tweets)
+       (props/tweets-from-response)
+       (map props/parse-tweet)))
 
 (defn -main
   "I don't do a whole lot ... yet."
