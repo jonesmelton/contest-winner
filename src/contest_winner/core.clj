@@ -34,6 +34,15 @@
   []
   (first (parse-tweets "dat boi")))
 
+(defn filter-tweets
+  [regex tweets]
+  (filter (partial tweet-contains? regex) tweets))
+
+(defn saft
+  "search-and-filter-tweets"
+  [regex search-term]
+  (filter-tweets regex (parse-tweets search-term)))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
