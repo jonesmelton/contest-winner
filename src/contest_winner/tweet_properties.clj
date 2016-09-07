@@ -25,7 +25,7 @@
 (def tweet-parsers
   [user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
 
-(defn raw-parse-tweet
+(defn parse-tweet
     [tweet]
     (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
 

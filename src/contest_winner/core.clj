@@ -15,9 +15,9 @@
   [query]
   (rest/search-tweets :oauth-creds my-creds :params {:q query}))
 
-(defn return-condensed-tweets
+(defn parse-tweets
   [search-query]
-  (map props/raw-parse-tweet (props/tweets-from-response (search-tweets search-query))))
+  (map props/parse-tweet (props/tweets-from-response (search-tweets search-query))))
 
 (defn -main
   "I don't do a whole lot ... yet."
