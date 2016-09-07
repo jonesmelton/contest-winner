@@ -1,5 +1,8 @@
 (ns contest-winner.tweet-properties)
 
+(defn tweet-id [tweet]
+  (get-in tweet [:id]))
+
 (defn user-id [tweet]
   (get-in tweet [:user :id]))
 
@@ -20,15 +23,28 @@
   (get-in tweet [:favorited]))
 
 (def tweet-keys
-  [:user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
+  [:tweet-id :user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
 
 (def tweet-parsers
-  [user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
+  [tweet-id user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
 
-(defn raw-parse-tweet
+(defn parse-tweet
     [tweet]
     (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
 
 (defn tweets-from-response
   [search-response]
   (get-in search-response [:body :statuses]))
+
+(defn contains?? 
+  [regex string]
+  (boolean (re-find regex string)))
+
+(defn tweet-contains?
+  [regex tweet]
+  (contains?? regex (:tweet-text tweet)))
+
+(defn filter-tweets
+  [regex tweets]
+  (filter (partial tweet-contains? regex) tweets))
+

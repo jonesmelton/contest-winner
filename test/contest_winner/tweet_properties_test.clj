@@ -16,10 +16,10 @@
     (is (= [] (tweet-hashtags tweet))))
 
   (testing "returns following status"
-    (is (= false (following-poster? tweet))))
+    (is (false? (following-poster? tweet))))
 
   (testing "returns true if bot retweeted the tweet"
-    (is (= false (retweeted? tweet))))
+    (is (false? (retweeted? tweet))))
 
   (testing "returns true if bot favorited the tweet"
-    (is (= false (favorited? tweet)))))
+    (is (false? (favorited? tweet)))))

@@ -15,9 +15,22 @@
   [query]
   (rest/search-tweets :oauth-creds my-creds :params {:q query}))
 
-(defn return-condensed-tweets
+(defn parse-tweets
   [search-query]
-  (map props/raw-parse-tweet (props/tweets-from-response (search-tweets search-query))))
+  (->> search-query
+       (search-tweets)
+       (props/tweets-from-response)
+       (map props/parse-tweet)))
+
+(defn get-tweet 
+  "test tweet for when u need a tweet mane"
+  []
+  (first (parse-tweets "dat boi")))
+
+(defn saft
+  "search-and-filter-tweets"
+  [regex search-term]
+  (props/filter-tweets regex (parse-tweets search-term)))
 
 (defn -main
   "I don't do a whole lot ... yet."
