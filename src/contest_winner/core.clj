@@ -22,26 +22,15 @@
        (props/tweets-from-response)
        (map props/parse-tweet)))
 
-(defn contains?? 
-  [regex string]
-  (boolean (re-find regex string)))
-
-(defn tweet-contains?
-  [regex tweet]
-  (contains?? regex (:tweet-text tweet)))
-
 (defn get-tweet 
+  "test tweet for when u need a tweet mane"
   []
   (first (parse-tweets "dat boi")))
-
-(defn filter-tweets
-  [regex tweets]
-  (filter (partial tweet-contains? regex) tweets))
 
 (defn saft
   "search-and-filter-tweets"
   [regex search-term]
-  (filter-tweets regex (parse-tweets search-term)))
+  (props/filter-tweets regex (parse-tweets search-term)))
 
 (defn -main
   "I don't do a whole lot ... yet."

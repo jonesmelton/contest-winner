@@ -32,3 +32,16 @@
 (defn tweets-from-response
   [search-response]
   (get-in search-response [:body :statuses]))
+
+(defn contains?? 
+  [regex string]
+  (boolean (re-find regex string)))
+
+(defn tweet-contains?
+  [regex tweet]
+  (contains?? regex (:tweet-text tweet)))
+
+(defn filter-tweets
+  [regex tweets]
+  (filter (partial tweet-contains? regex) tweets))
+
