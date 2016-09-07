@@ -1,5 +1,8 @@
 (ns contest-winner.tweet-properties)
 
+(defn tweet-id [tweet]
+  (get-in tweet [:id]))
+
 (defn user-id [tweet]
   (get-in tweet [:user :id]))
 
@@ -20,10 +23,10 @@
   (get-in tweet [:favorited]))
 
 (def tweet-keys
-  [:user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
+  [:tweet-id :user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
 
 (def tweet-parsers
-  [user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
+  [tweet-id user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
 
 (defn parse-tweet
     [tweet]
