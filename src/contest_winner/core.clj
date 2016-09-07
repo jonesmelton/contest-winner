@@ -17,10 +17,22 @@
 
 (defn parse-tweets
   [search-query]
-  (->> (search-query)
+  (->> search-query
        (search-tweets)
        (props/tweets-from-response)
        (map props/parse-tweet)))
+
+(defn contains?? 
+  [regex string]
+  (boolean (re-find regex string)))
+
+(defn tweet-contains?
+  [regex tweet]
+  (contains?? regex (:tweet-text tweet)))
+
+(defn get-tweet 
+  []
+  (first (parse-tweets "dat boi")))
 
 (defn -main
   "I don't do a whole lot ... yet."
