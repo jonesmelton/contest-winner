@@ -32,9 +32,12 @@
   [regex search-term]
   (props/filter-tweets regex (parse-tweets search-term)))
 
+(defn retweet 
+  [tweet]
+  (rest/statuses-retweet :oauth my-creds :params {:id (props/tweet-id)}))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (rest/statuses-update :oauth-creds my-creds :params {:status args}))
 
-#_ {:user-id 771789532379222016, :tweet-text "helllooooooo", :tweet-hashtags [], :following_poster? false, :retweeted? false, :favorited? false}
