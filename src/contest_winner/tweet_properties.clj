@@ -1,32 +1,26 @@
 (ns contest-winner.tweet-properties)
 
-(defn tweet-id [tweet]
-  (get-in tweet [:id]))
+(defmacro def-tweet-getter
+  "Defines a function that gets the final value from the tweet."
+  [fn-name & rest]
+  `(defn ~fn-name [tweet#]
+     (get-in tweet# ~(vec rest))))
 
-(defn user-id [tweet]
-  (get-in tweet [:user :id]))
-
-(defn tweet-text [tweet]
-  (get-in tweet [:text]))
-
-(defn tweet-hashtags [tweet]
-  (get-in tweet [:entities :hashtags]))
-
-(defn following-poster? [tweet]
-  (get-in tweet [:user :following]))
-
-(defn retweeted? [tweet]
-  "indicates if the current user has retweeted the tweet"
-  (get-in tweet [:retweeted]))
-
-(defn favorited? [tweet]
-  (get-in tweet [:favorited]))
-
-(def tweet-keys
-  [:tweet-id :user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
+(def-tweet-getter tweet-id :id)
+(def-tweet-getter user-id :user :id)
+(def-tweet-getter tweet-text :text)
+(def-tweet-getter tweet-hashtags :entities :hashtags)
+(def-tweet-getter following-poster? :user :following)
+(def-tweet-getter retweeted? :retweeted)
+(def-tweet-getter favorited? :favorited)
 
 (def tweet-parsers
+  "List of functions to get values from tweet."
   [tweet-id user-id tweet-text tweet-hashtags following-poster? retweeted? favorited?])
+
+(def tweet-keys
+  "Keywords for keys of tweet hashmap."
+  (map keyword tweet-parsers))
 
 (defn parse-tweet
     [tweet]
