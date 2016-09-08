@@ -20,7 +20,7 @@
 
 (def tweet-keys
   "Keywords for keys of tweet hashmap."
-  (map keyword tweet-parsers))
+  [:tweet-id :user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
 
 (defn parse-tweet
     [tweet]

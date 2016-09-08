@@ -34,7 +34,7 @@
 
 (defn retweet 
   [tweet]
-  (rest/statuses-retweet :oauth my-creds :params {:id (props/tweet-id)}))
+  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
 
 (defn -main
   "I don't do a whole lot ... yet."
