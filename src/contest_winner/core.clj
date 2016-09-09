@@ -34,23 +34,11 @@
 
 (defn retweet
   [tweet]
-  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id tweet}))
-
-(defn retweet-user
-  [name]
-  (rest/statuses-user-timeline :oauth-creds my-creds :params {:screen_name name}))
-
-(defn get-users-tweets
-  [tweets]
-  (get-in tweets [:body]))
-
-(defn tweet-ids
-  []
-  (map props/tweet-id (get-users-tweets (retweet-user "chasey_rogers"))))
+  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
 
 (defn retweet-every-tweet
-  []
-  (map retweet (tweet-ids)))
+  [tweets]
+  (map retweet tweets))
 
 (defn -main
   "I don't do a whole lot ... yet."
