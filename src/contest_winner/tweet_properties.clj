@@ -20,17 +20,17 @@
 
 (def tweet-keys
   "Keywords for keys of tweet hashmap."
-  (map keyword tweet-parsers))
+  [:tweet-id :user-id :tweet-text :tweet-hashtags :following-poster? :retweeted? :favorited?])
 
 (defn parse-tweet
-    [tweet]
-    (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
+  [tweet]
+  (zipmap tweet-keys ((apply juxt tweet-parsers) tweet)))
 
 (defn tweets-from-response
   [search-response]
   (get-in search-response [:body :statuses]))
 
-(defn contains?? 
+(defn contains??
   [regex string]
   (boolean (re-find regex string)))
 

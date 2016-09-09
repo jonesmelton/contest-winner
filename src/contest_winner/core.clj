@@ -32,12 +32,40 @@
   [regex search-term]
   (props/filter-tweets regex (parse-tweets search-term)))
 
-(defn retweet 
+(defn retweet
   [tweet]
-  (rest/statuses-retweet :oauth my-creds :params {:id (props/tweet-id)}))
+  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id tweet}))
+
+(defn retweet-user
+  [name]
+  (rest/statuses-user-timeline :oauth-creds my-creds :params {:screen_name name}))
+
+(defn get-users-tweets
+  [tweets]
+  (get-in tweets [:body]))
+
+(defn tweet-ids
+  []
+  (map props/tweet-id (get-users-tweets (retweet-user "chasey_rogers"))))
+
+(defn retweet-every-tweet
+  []
+  (map retweet (tweet-ids)))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (rest/statuses-update :oauth-creds my-creds :params {:status args}))
 
+;; search tweets by regex vector
+;; get back hella tweets
+;;==see what those tweets need us to do. 
+;; -retweet
+;; -favorite
+;; -both?
+;; -follow the tweeter 
+;; -follow a mentioned account
+;;============================
+;; do every thing required
+;; confirm everything is done
+;; check dm's/ mentions
