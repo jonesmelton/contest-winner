@@ -40,6 +40,16 @@
   [tweets]
   (map retweet tweets))
 
+; string->hashmap
+(defn gather-tweets
+  "Takes a search query, and returns a hashmap of tweets organized by which actions need to be taken on them."
+  [search-query]
+  (let [all-tweets {}
+        tweets (props/tweets-without props/contest-exclusions (saft props/contest-matchers search-query))]
+    (assoc all-tweets :to-retweet tweets
+                      :to-follow (props/filter-tweets props/follow-matchers tweets)
+                      :to-favorite (props/filter-tweets props/favorite-matchers tweets))))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]

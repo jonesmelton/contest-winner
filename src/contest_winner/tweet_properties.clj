@@ -38,6 +38,9 @@
 
 (def contest-exclusions #"facebook|tumblr|instagram|youtube")
 
+(def follow-matchers #"follow|FOLLOW|Follow")
+
+(def favorite-matchers #"Favorite|FAVORITE|favorite")
 ;;"takes tweets by regex and filters them by the complement of contest-exclusionds"
 
 (defn tweet-contains?
