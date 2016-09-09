@@ -32,12 +32,28 @@
   [regex search-term]
   (props/filter-tweets regex (parse-tweets search-term)))
 
-(defn retweet 
+(defn retweet
   [tweet]
   (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+
+(defn retweet-every-tweet
+  [tweets]
+  (map retweet tweets))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (rest/statuses-update :oauth-creds my-creds :params {:status args}))
 
+;; search tweets by regex vector
+;; get back hella tweets
+;;==see what those tweets need us to do. 
+;; -retweet
+;; -favorite
+;; -both?
+;; -follow the tweeter 
+;; -follow a mentioned account
+;;============================
+;; do every thing required
+;; confirm everything is done
+;; check dm's/ mentions
