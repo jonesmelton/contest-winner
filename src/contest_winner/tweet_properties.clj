@@ -34,11 +34,27 @@
   [regex string]
   (boolean (re-find regex string)))
 
+(def contest-matchers #"(?i)rt|retweet.+(?i)win|enter")
+
+(def contest-exclusions #"facebook|tumblr|instagram|youtube")
+
+(def follow-matchers #"follow|FOLLOW|Follow")
+
+(def favorite-matchers #"Favorite|FAVORITE|favorite")
+;;"takes tweets by regex and filters them by the complement of contest-exclusionds"
+
 (defn tweet-contains?
   [regex tweet]
   (contains?? regex (:tweet-text tweet)))
 
+(defn tweet-doesnt-have
+  [regex tweet]
+  (complement (contains?? regex (:tweet-text tweet))))
+
+(defn tweets-without 
+  [regex tweets]
+  (filter (partial tweet-doesnt-have regex) tweets))
+
 (defn filter-tweets
   [regex tweets]
   (filter (partial tweet-contains? regex) tweets))
-
