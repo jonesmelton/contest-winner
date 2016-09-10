@@ -1,4 +1,4 @@
-(ns contest-winner.tweet-filtering-test-constants)
+(ns contest-winner.constants.tweet-filtering-test-constants)
 
 (def tweet 
   "a single tweet"

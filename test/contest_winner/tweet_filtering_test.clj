@@ -1,7 +1,7 @@
 (ns contest-winner.tweet-filtering-test
   (:require [clojure.test :refer :all]
             [contest-winner.core :refer :all]
-            [contest-winner.tweet-filtering-test-constants :refer :all]
+            [contest-winner.constants.tweet-filtering-test-constants :refer :all]
             [contest-winner.tweet-properties :refer :all]))
 
 (deftest regex-matching
