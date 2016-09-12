@@ -1,6 +1,6 @@
 (ns contest-winner.tweet-properties-test
   (:require [clojure.test :refer :all]
-            [contest-winner.constants.tweet-properties-test-constants :refer :all]
+            [contest-winner.test-data.tweet-properties-test-test-data :refer :all]
             [contest-winner.tweet-properties :refer :all]))
 
 (deftest tweet-parsing

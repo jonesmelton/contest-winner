@@ -18,6 +18,7 @@
 (defn parse-tweets
   [search-query]
   (->> search-query
+       
        (search-tweets)
        (props/tweets-from-response)
        (map props/parse-tweet)))
@@ -49,6 +50,13 @@
     (assoc all-tweets :to-retweet tweets
                       :to-follow (props/filter-tweets props/follow-matchers tweets)
                       :to-favorite (props/filter-tweets props/favorite-matchers tweets))))
+
+#_ (defn perform-actions
+  [organized-tweets]
+  (do
+    (dorun (map follow (:to-follow organized-tweets)))
+    (dorun (map favorite (:to-favorite organized-tweets)))
+    (dorun (map retweet (:to-retweet organized-tweets)))))
 
 (defn -main
   "I don't do a whole lot ... yet."
