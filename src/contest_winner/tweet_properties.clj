@@ -1,4 +1,5 @@
-(ns contest-winner.tweet-properties)
+(ns contest-winner.tweet-properties
+  (:refer-clojure :exclude [contains?]))
 
 (defmacro def-tweet-getter
   "Defines a function that gets the final value from the tweet."
@@ -30,10 +31,11 @@
   [search-response]
   (get-in search-response [:body :statuses]))
 
-(defn contains??
+(defn contains?
   [regex string]
   (boolean (re-find regex string)))
 
+;; regex matchers
 (def contest-matchers #"(?i)rt|retweet.+(?i)win|enter")
 
 (def contest-exclusions #"facebook|tumblr|instagram|youtube")
@@ -41,15 +43,14 @@
 (def follow-matchers #"follow|FOLLOW|Follow")
 
 (def favorite-matchers #"Favorite|FAVORITE|favorite")
-;;"takes tweets by regex and filters them by the complement of contest-exclusionds"
 
 (defn tweet-contains?
   [regex tweet]
-  (contains?? regex (:tweet-text tweet)))
+  (contains? regex (:tweet-text tweet)))
 
 (defn tweet-doesnt-have
   [regex tweet]
-  (complement (contains?? regex (:tweet-text tweet))))
+  (complement (contains? regex (:tweet-text tweet))))
 
 (defn tweets-without 
   [regex tweets]

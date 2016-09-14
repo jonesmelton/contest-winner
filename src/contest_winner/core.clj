@@ -18,11 +18,12 @@
 (defn parse-tweets
   [search-query]
   (->> search-query
+
        (search-tweets)
        (props/tweets-from-response)
        (map props/parse-tweet)))
 
-(defn get-tweet 
+(defn get-tweet
   "test tweet for when u need a tweet mane"
   []
   (first (parse-tweets "dat boi")))
@@ -35,6 +36,14 @@
 (defn retweet
   [tweet]
   (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+
+(defn follow-user
+  [tweet]
+  (rest/friendships-create :oauth-creds my-creds :params {:user_id (:user-id tweet)}))
+
+(defn favorite-tweet
+  [tweet]
+  (rest/favorites-create :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
 
 (defn retweet-every-tweet
   [tweets]
@@ -50,6 +59,13 @@
                       :to-follow (props/filter-tweets props/follow-matchers tweets)
                       :to-favorite (props/filter-tweets props/favorite-matchers tweets))))
 
+(defn perform-actions
+  [organized-tweets]
+  (do
+    (dorun (map follow-user (:to-follow organized-tweets)))
+    (dorun (map favorite-tweet (:to-favorite organized-tweets)))
+    (dorun (map retweet (:to-retweet organized-tweets)))))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
@@ -57,11 +73,11 @@
 
 ;; search tweets by regex vector
 ;; get back hella tweets
-;;==see what those tweets need us to do. 
+;;==see what those tweets need us to do.
 ;; -retweet
 ;; -favorite
 ;; -both?
-;; -follow the tweeter 
+;; -follow the tweeter
 ;; -follow a mentioned account
 ;;============================
 ;; do every thing required
