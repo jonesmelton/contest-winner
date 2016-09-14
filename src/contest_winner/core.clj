@@ -66,6 +66,10 @@
     (dorun (map favorite-tweet (:to-favorite organized-tweets)))
     (dorun (map retweet (:to-retweet organized-tweets)))))
 
+(defn win
+  [search-query]
+  (perform-actions (gather-tweets search-query)))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
