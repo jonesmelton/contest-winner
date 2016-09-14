@@ -1,7 +1,7 @@
-(ns contest-winner.constants.tweet-filtering-test-constants
+(ns contest-winner.test-data.tweet-filtering-test-test-data
   "test tweets for filtering tests inside test/constest_winner/tweet_filtering_test")
 
-(def ^{:const true} tweet 
+(def ^{:const true} tweet
   "a single tweet"
   {:user-id 2501638598, :tweet-text "this isnt a really a quote but theres a sign that says 'here comes dat boi to vote for ____ as class president'", :tweet-hashtags [], :following-poster? false, :retweeted? false, :favorited? false})
 

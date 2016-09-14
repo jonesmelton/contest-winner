@@ -1,4 +1,4 @@
-(ns contest-winner.constants.tweet-properties-test-constants
+(ns contest-winner.test-data.tweet-properties-test-test-data
   "test tweet for tests inside of test/contest_winner/tweet_properties_test")
 
 (def ^{:const true} tweet
