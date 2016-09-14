@@ -33,17 +33,26 @@
   [regex search-term]
   (props/filter-tweets regex (parse-tweets search-term)))
 
+; structure for retweet/follow-user/favorite-tweet functions
+(defn create-route
+  [rest-route]
+  (symbol (clojure.string/join ["rest/" rest-route])))
+
+(defn tweet-actions
+  [rest-route property]
+  ((create-route rest-route) :oauth-creds my-creds :params property))
+
 (defn retweet
   [tweet]
-  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+  (tweet-actions "statuses-retweet-id" {:id (:tweet-id tweet)}))
 
 (defn follow-user
   [tweet]
-  (rest/friendships-create :oauth-creds my-creds :params {:user_id (:user-id tweet)}))
+  (tweet-actions "friendships-create" {:user-id (:user-id tweet)}))
 
 (defn favorite-tweet
   [tweet]
-  (rest/favorites-create :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+  (tweet-actions "favorites-create" {:id (:tweet-id tweet)}))
 
 (defn retweet-every-tweet
   [tweets]
