@@ -58,6 +58,13 @@
                       :to-follow (props/filter-tweets props/follow-matchers tweets)
                       :to-favorite (props/filter-tweets props/favorite-matchers tweets))))
 
+(defn take-actions
+  [organized-tweets]
+  (do 
+    (dorun (map follow-user (:to-follow organized-tweets)))
+    (dorun (map favorite-tweet (:to-favorite organized-tweets)))
+    (dorun (map retweet (:to-retweet organized-tweets)))))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
