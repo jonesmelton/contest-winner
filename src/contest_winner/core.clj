@@ -62,8 +62,8 @@
 (defn perform-actions
   [organized-tweets]
   (do
-    (dorun (map follow (:to-follow organized-tweets)))
-    (dorun (map favorite (:to-favorite organized-tweets)))
+    (dorun (map follow-user (:to-follow organized-tweets)))
+    (dorun (map favorite-tweet (:to-favorite organized-tweets)))
     (dorun (map retweet (:to-retweet organized-tweets)))))
 
 (defn -main
