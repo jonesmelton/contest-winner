@@ -36,6 +36,10 @@
   [tweet]
   (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
 
+(defn follow-user
+  [tweet]
+  (rest/friendships-create :oauth-creds my-creds :params {:user_id (:user-id tweet)}))
+
 (defn retweet-every-tweet
   [tweets]
   (map retweet tweets))
