@@ -40,6 +40,10 @@
   [tweet]
   (rest/friendships-create :oauth-creds my-creds :params {:user_id (:user-id tweet)}))
 
+(defn favorite-tweet
+  [tweet]
+  (rest/favorites-create :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+
 (defn retweet-every-tweet
   [tweets]
   (map retweet tweets))
