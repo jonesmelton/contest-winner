@@ -42,7 +42,7 @@
 
 (def follow-matchers #"follow|FOLLOW|Follow")
 
-(def favorite-matchers #"Favorite|FAVORITE|favorite")
+(def favorite-matchers #"Favorite|FAVORITE|favorite|like|Like|LIKE")
 
 (defn tweet-contains?
   [regex tweet]
