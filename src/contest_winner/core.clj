@@ -33,17 +33,29 @@
   [regex search-term]
   (props/filter-tweets regex (parse-tweets search-term)))
 
+; structure for retweet/follow-user/favorite-tweet functions
+(defn create-route
+  "Takes a rest route as a string and returns 
+   a symbol referring to that function."
+  [rest-route]
+  (symbol (str "rest/" rest-route)))
+
+(defn tweet-actions
+  "Takes a api function and hashmap of params."
+  [rest-route property]
+  ((create-route rest-route) :oauth-creds my-creds :params property))
+
 (defn retweet
   [tweet]
-  (rest/statuses-retweet-id :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+  (tweet-actions "statuses-retweet-id" {:id (:tweet-id tweet)}))
 
 (defn follow-user
   [tweet]
-  (rest/friendships-create :oauth-creds my-creds :params {:user_id (:user-id tweet)}))
+  (tweet-actions "friendships-create" {:user-id (:user-id tweet)}))
 
 (defn favorite-tweet
   [tweet]
-  (rest/favorites-create :oauth-creds my-creds :params {:id (:tweet-id tweet)}))
+  (tweet-actions "favorites-create" {:id (:tweet-id tweet)}))
 
 (defn retweet-every-tweet
   [tweets]
@@ -66,10 +78,14 @@
     (dorun (map favorite-tweet (:to-favorite organized-tweets)))
     (dorun (map retweet (:to-retweet organized-tweets)))))
 
+(defn win
+  [search-query]
+  (perform-actions (gather-tweets search-query)))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (rest/statuses-update :oauth-creds my-creds :params {:status args}))
+  (win args))
 
 ;; search tweets by regex vector
 ;; get back hella tweets
