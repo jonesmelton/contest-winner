@@ -57,10 +57,6 @@
   [tweet]
   (tweet-actions "favorites-create" {:id (:tweet-id tweet)}))
 
-(defn retweet-every-tweet
-  [tweets]
-  (map retweet tweets))
-
 ; string->hashmap
 (defn gather-tweets
   "Takes a search query, and returns a hashmap of tweets organized by which actions need to be taken on them."
@@ -87,15 +83,5 @@
   [& args]
   (win args))
 
-;; search tweets by regex vector
-;; get back hella tweets
-;;==see what those tweets need us to do.
-;; -retweet
-;; -favorite
-;; -both?
-;; -follow the tweeter
 ;; -follow a mentioned account
-;;============================
-;; do every thing required
-;; confirm everything is done
-;; check dm's/ mentions
+
