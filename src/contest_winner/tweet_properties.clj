@@ -1,4 +1,4 @@
-git (ns contest-winner.tweet-properties
+(ns contest-winner.tweet-properties
   (:refer-clojure :exclude [contains?]))
 
 (defmacro def-tweet-getter
