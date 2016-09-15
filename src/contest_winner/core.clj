@@ -35,10 +35,13 @@
 
 ; structure for retweet/follow-user/favorite-tweet functions
 (defn create-route
+  "Takes a rest route as a string and returns 
+   a symbol referring to that function."
   [rest-route]
-  (symbol (clojure.string/join ["rest/" rest-route])))
+  (symbol (str "rest/" rest-route)))
 
 (defn tweet-actions
+  "Takes a api function and hashmap of params."
   [rest-route property]
   ((create-route rest-route) :oauth-creds my-creds :params property))
 
@@ -82,7 +85,7 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (rest/statuses-update :oauth-creds my-creds :params {:status args}))
+  (win args))
 
 ;; search tweets by regex vector
 ;; get back hella tweets
