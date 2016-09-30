@@ -18,7 +18,6 @@
 (defn parse-tweets
   [search-query]
   (->> search-query
-
        (search-tweets)
        (props/tweets-from-response)
        (map props/parse-tweet)))
@@ -38,7 +37,7 @@
   "Takes a rest route as a string and returns 
    a symbol referring to that function."
   [rest-route]
-  (symbol (str "rest/" rest-route)))
+  (-> (str "twitter.api.restful/" rest-route) symbol resolve))
 
 (defn tweet-actions
   "Takes a api function and hashmap of params."
@@ -67,12 +66,20 @@
                       :to-follow (props/filter-tweets props/follow-matchers tweets)
                       :to-favorite (props/filter-tweets props/favorite-matchers tweets))))
 
-(defn perform-actions
+(defn execute-follow-users
   [organized-tweets]
-  (do
-    (dorun (map follow-user (:to-follow organized-tweets)))
-    (dorun (map favorite-tweet (:to-favorite organized-tweets)))
-    (dorun (map retweet (:to-retweet organized-tweets)))))
+  (dorun (map follow-user (:to-follow organized-tweets))) organized-tweets)
+
+(defn execute-favorite-tweets
+  [organized-tweets]
+  (dorun (map favorite-tweet (:to-favorite organized-tweets))) organized-tweets)
+
+(defn execute-retweet
+  [organized-tweets]
+  (dorun (map retweet (:to-retweet organized-tweets))) organized-tweets)
+
+(def perform-actions
+  (comp execute-retweet execute-follow-users execute-favorite-tweets))
 
 (defn win
   [search-query]
@@ -82,6 +89,4 @@
   "I don't do a whole lot ... yet."
   [& args]
   (win args))
-
-;; -follow a mentioned account
 

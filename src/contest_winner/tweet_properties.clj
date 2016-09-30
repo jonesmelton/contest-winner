@@ -59,3 +59,4 @@
 (defn filter-tweets
   [regex tweets]
   (filter (partial tweet-contains? regex) tweets))
+
