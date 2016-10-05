@@ -2,9 +2,15 @@
   (:require
                 [twitter.api.restful :as rest]
                 [twitter.oauth :as twitter-oauth]
+                [twitter.callbacks :as callbacks]
+                [twitter.callbacks.handlers :as handlers]
+                [twitter.api.streaming :as stream]
                 [environ.core :refer [env]]
+                [clojure.data.json :as json]
                 [contest-winner.tweet-properties :as props])
-  (:gen-class))
+  (:gen-class)
+  (:import
+   (twitter.callbacks.protocols AsyncStreamingCallback)))
 
 (def my-creds (twitter-oauth/make-oauth-creds (env :app-consumer-key)
                                               (env :app-consumer-secret)
@@ -84,6 +90,23 @@
 (defn win
   [search-query]
   (perform-actions (gather-tweets search-query)))
+
+; retrieves the user stream, waits 1 minute and then cancels the async call
+
+
+; supply a callback that only prints the text of the status
+(def ^:dynamic 
+  json->hashmap
+     (AsyncStreamingCallback. (comp println #(:text %) json/read-json #(str %2)) 
+                      (fn [_])
+                      (fn [_ ex]
+                        (.printStackTrace ex))))
+
+(defn search-stream
+  [search-term]
+  (stream/statuses-filter :params {:track search-term}
+                   :oauth-creds my-creds
+                   :callbacks json->hashmap))
 
 (defn -main
   "I don't do a whole lot ... yet."
